@@ -10,6 +10,8 @@ const CACHE_NAME = "my-cache";
 // キャッシュするJavaScriptファイルのパス
 const urlsToCache = ["/js/my-script.js"];
 
+console.log("hello");
+
 self.addEventListener("fetch", (event) => {
   console.log("ここですよfetch");
   event.respondWith(
