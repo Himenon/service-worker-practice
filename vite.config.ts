@@ -11,6 +11,9 @@ export default defineConfig({
   plugins: [react(), VitePWA({
     mode: "development",
     scope: "/service-worker-practice/",
+    workbox: {
+      cleanupOutdatedCaches: true,
+    },
     manifest: {
       name: "PWA Inject Manifest",
       short_name: 'PWA Inject',

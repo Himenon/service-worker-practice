@@ -9,16 +9,6 @@ const CACHE_NAME = "my-cache";
 
 const PRE_CACHED_RESOURCES = ["/assets/"];
 
-self.addEventListener("activate", (event) => {
-  const clearOldCache = async () => {
-    const cacheNames = await caches.keys();
-    await Promise.all(cacheNames.map(async (cacheName) => {
-      await caches.delete(cacheName);
-    }));
-  }
-  event.waitUntil(clearOldCache());
-})
-
 self.addEventListener("fetch", (event) => {
   const returnCachedResource = async () => {
       // Open the app's cache.
