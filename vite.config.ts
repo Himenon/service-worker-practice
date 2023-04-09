@@ -17,8 +17,11 @@ export default defineConfig({
       ]
     },
     // injectRegister: "auto",
+    injectManifest: {
+      rollupFormat: "iife",
+    },
     minify: false,
-    // registerType: "autoUpdate",
+    registerType: "autoUpdate",
     /**
      * @see https://vite-pwa-org.netlify.app/guide/inject-manifest.html
      */

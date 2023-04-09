@@ -10,10 +10,25 @@ const CACHE_NAME = "my-cache";
 // キャッシュするJavaScriptファイルのパス
 const urlsToCache = ["/js/my-script.js"];
 
-console.log("hello");
+self.addEventListener("install", (event) => {
+  console.log({
+    type: "install",
+    event,
+  })
+})
+
+self.addEventListener("activate", (event) => {
+  console.log({
+    type: "activate",
+    event,
+  })
+})
 
 self.addEventListener("fetch", (event) => {
-  console.log("ここですよfetch");
+  console.log({
+    type: "fetch",
+    event,
+  });
   event.respondWith(
     caches.match(event.request).then((response) => {
       // キャッシュされたJavaScriptファイルが存在する場合、キャッシュから取得
@@ -36,11 +51,16 @@ self.addEventListener("fetch", (event) => {
 });
 
 self.addEventListener("install", (event) => {
-  console.log("ここですよ");
   // キャッシュを作成
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("Opened cache");
+      cache.keys().then(value => {
+        console.log({
+          message: "Opened cache",
+          keys: value,
+        })
+      })
+      
       return cache.addAll(urlsToCache);
     })
   );
