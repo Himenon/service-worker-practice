@@ -1,11 +1,11 @@
 {
   "name": "PWA Inject Manifest",
   "short_name": "PWA Inject",
-  "start_url": "/",
+  "start_url": "/service-worker-practice/",
   "display": "standalone",
   "background_color": "#ffffff",
   "lang": "en",
-  "scope": "/",
+  "scope": "/service-worker-practice/",
   "icons": [
     {
       "src": "pwa-192x192.png",

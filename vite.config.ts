@@ -7,6 +7,7 @@ export default defineConfig({
   build: {
     outDir: "docs"
   },
+  base: "service-worker-practice",
   plugins: [react(), VitePWA({
     manifest: {
       name: "PWA Inject Manifest",
