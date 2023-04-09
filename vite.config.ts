@@ -7,8 +7,10 @@ export default defineConfig({
   build: {
     outDir: "docs"
   },
-  base: "service-worker-practice",
+  base: "/service-worker-practice",
   plugins: [react(), VitePWA({
+    mode: "development",
+    scope: "/service-worker-practice",
     manifest: {
       name: "PWA Inject Manifest",
       short_name: 'PWA Inject',
@@ -20,7 +22,6 @@ export default defineConfig({
         },
       ]
     },
-    // injectRegister: "auto",
     injectManifest: {
       rollupFormat: "iife",
     },
@@ -36,8 +37,5 @@ export default defineConfig({
       enabled: true,
       type: 'module',
     },
-    // workbox: {
-    //   globPatterns: ['**/*.{js,css,html,ico,png,svg}']
-    // }
   })],
 });
