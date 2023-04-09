@@ -7,7 +7,7 @@ precacheAndRoute(self.__WB_MANIFEST)
 // キャッシュ名
 const CACHE_NAME = "my-cache";
 
-const PRE_CACHED_RESOURCES = ["/js/my-script.js"];
+const PRE_CACHED_RESOURCES = ["/assets/"];
 
 self.addEventListener("activate", (event) => {
   console.log({
