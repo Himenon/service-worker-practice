@@ -29,8 +29,14 @@ self.addEventListener("fetch", (event) => {
       } else {
         // The resource wasn't found in the cache, so fetch it from the network.
         const fetchResponse = await fetch(event.request.url);
-        // Put the response in cache.
-        cache.put(event.request.url, fetchResponse.clone());
+        /**
+         * ignore "chrome-extension" etc...
+         */
+        if (event.request.url.startsWith("http")) {
+          // Put the response in cache.
+          cache.put(event.request.url, fetchResponse.clone());
+        }
+
         // And return the response.
         return fetchResponse;
       }
