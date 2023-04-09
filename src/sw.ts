@@ -1,4 +1,4 @@
-import { precacheAndRoute } from 'workbox-precaching'
+import { precacheAndRoute } from "workbox-precaching";
 
 declare let self: ServiceWorkerGlobalScope
 
@@ -7,15 +7,7 @@ precacheAndRoute(self.__WB_MANIFEST)
 // キャッシュ名
 const CACHE_NAME = "my-cache";
 
-// キャッシュするJavaScriptファイルのパス
-const urlsToCache = ["/js/my-script.js"];
-
-self.addEventListener("install", (event) => {
-  console.log({
-    type: "install",
-    event,
-  })
-})
+const PRE_CACHED_RESOURCES = ["/js/my-script.js"];
 
 self.addEventListener("activate", (event) => {
   console.log({
@@ -25,43 +17,33 @@ self.addEventListener("activate", (event) => {
 })
 
 self.addEventListener("fetch", (event) => {
-  console.log({
-    type: "fetch",
-    event,
-  });
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      // キャッシュされたJavaScriptファイルが存在する場合、キャッシュから取得
-      if (response) {
-        return response;
+  const returnCachedResource = async () => {
+      // Open the app's cache.
+      const cache = await caches.open(CACHE_NAME);
+      // Find the response that was pre-cached during the `install` event.
+      const cachedResponse = await cache.match(event.request.url);
+  
+      if (cachedResponse) {
+        // Return the resource.
+        return cachedResponse;
+      } else {
+        // The resource wasn't found in the cache, so fetch it from the network.
+        const fetchResponse = await fetch(event.request.url);
+        // Put the response in cache.
+        cache.put(event.request.url, fetchResponse.clone());
+        // And return the response.
+        return fetchResponse;
       }
-
-      // キャッシュされていない場合、Webサーバーから取得
-      return fetch(event.request).then((response) => {
-        // レスポンスが正常な場合、キャッシュに保存
-        if (response.status === 200) {
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, response.clone());
-          });
-        }
-        return response;
-      });
-    })
-  );
+  }
+  event.respondWith(returnCachedResource());
 });
 
 self.addEventListener("install", (event) => {
-  // キャッシュを作成
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      cache.keys().then(value => {
-        console.log({
-          message: "Opened cache",
-          keys: value,
-        })
-      })
-      
-      return cache.addAll(urlsToCache);
-    })
-  );
+  const preCacheResources = async () => {
+    // Open the app's cache.
+    const cache = await caches.open(CACHE_NAME);
+    // Cache all static resources.
+    cache.addAll(PRE_CACHED_RESOURCES);
+  }
+  event.waitUntil(preCacheResources());
 });

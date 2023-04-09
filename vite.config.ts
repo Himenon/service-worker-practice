@@ -10,7 +10,7 @@ export default defineConfig({
   base: "/service-worker-practice",
   plugins: [react(), VitePWA({
     mode: "development",
-    scope: "/service-worker-practice",
+    scope: "/service-worker-practice/",
     manifest: {
       name: "PWA Inject Manifest",
       short_name: 'PWA Inject',
