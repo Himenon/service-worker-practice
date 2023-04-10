@@ -60,11 +60,5 @@ export default defineConfig({
     },
     minify: false,
     registerType: "autoUpdate",
-    /**
-     * @see https://vite-pwa-org.netlify.app/guide/inject-manifest.html
-     */
-    // srcDir: "src",
-    // filename: "sw.ts",
-    // strategies: "injectManifest",
   })],
 });
