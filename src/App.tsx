@@ -1,10 +1,12 @@
+import * as React from "react";
+import AppRouter from "./AppRouter";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div>
-      <h1>Service Worker Sample</h1>      
-    </div>
+    <AppRouter/>
   )
 }
+
+App.displayName = "App";
 
 export default App
