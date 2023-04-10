@@ -63,8 +63,8 @@ export default defineConfig({
     /**
      * @see https://vite-pwa-org.netlify.app/guide/inject-manifest.html
      */
-    srcDir: "src",
-    filename: "sw.ts",
-    strategies: "injectManifest",
+    // srcDir: "src",
+    // filename: "sw.ts",
+    // strategies: "injectManifest",
   })],
 });
