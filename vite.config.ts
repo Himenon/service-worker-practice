@@ -12,6 +12,36 @@ export default defineConfig({
     mode: "development",
     scope: "/service-worker-practice/",
     workbox: {
+      runtimeCaching: [
+        {
+          urlPattern: /assets/,
+          handler: "CacheFirst",
+          options: {
+            cacheName: "vite-cache",
+            expiration: {
+              maxEntries: 10,
+              maxAgeSeconds: 60 * 60 * 24 * 7, // <== 7 days
+            },
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+          },
+        },
+        {
+          urlPattern: /^https:\/\/cdn\.jsdelivr\.net\/.*/i,
+          handler: "CacheFirst",
+          options: {
+            cacheName: "cdn-jsdelivr-net-cache",
+            expiration: {
+              maxEntries: 10,
+              maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+            },
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+          },
+        },
+      ],
       cleanupOutdatedCaches: true,
     },
     manifest: {
